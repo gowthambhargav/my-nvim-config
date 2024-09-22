@@ -29,5 +29,3 @@ vim.keymap.set('n',"<C-l>",function() ui.nav_file(4)end)
 
 
 
-
-
