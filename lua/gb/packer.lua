@@ -51,6 +51,12 @@ return require('packer').startup(function(use)
 use 'overcache/NeoSolarized'
 use 'sainnhe/everforest'
 
+use {
+  'windwp/nvim-autopairs',
+  config = function()
+    require('nvim-autopairs').setup{}
+  end
+}
 
 
 end)
