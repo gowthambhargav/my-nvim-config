@@ -57,6 +57,8 @@ use {
     require('nvim-autopairs').setup{}
   end
 }
+use 'L3MON4D3/LuaSnip'
+use 'saadparwaiz1/cmp_luasnip' -- For completion integration with LuaSnip
 
 
 end)

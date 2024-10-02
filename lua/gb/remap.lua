@@ -28,12 +28,49 @@ vim.api.nvim_set_keymap('i', '<C-v>', '<Esc>"+pa', { noremap = true, silent = tr
 
 
 
+vim.api.nvim_set_keymap('i', '<Tab>', "luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>'", {expr = true, silent = true})
+vim.api.nvim_set_keymap('s', '<Tab>', "<cmd>lua require'luasnip'.jump(1)<Cr>", {silent = true})
+vim.api.nvim_set_keymap('s', '<S-Tab>', "<cmd>lua require'luasnip'.jump(-1)<Cr>", {silent = true})
 
 
 
 
 
+local cmp = require('cmp')
+local luasnip = require('luasnip')
 
+cmp.setup({
+    snippet = {
+        expand = function(args)
+            luasnip.lsp_expand(args.body)
+        end,
+    },
+    mapping = {
+        ['<Tab>'] = cmp.mapping(function(fallback)
+            if luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            elseif cmp.visible() then
+                cmp.select_next_item()
+            else
+                fallback()
+            end
+        end, { 'i', 's' }),
+        ['<S-Tab>'] = cmp.mapping(function(fallback)
+            if luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            elseif cmp.visible() then
+                cmp.select_prev_item()
+            else
+                fallback()
+            end
+        end, { 'i', 's' }),
+    },
+    sources = {
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' }, -- Ensure LuaSnip is added as a source
+        { name = 'buffer' },
+    },
+})
 
 
 
