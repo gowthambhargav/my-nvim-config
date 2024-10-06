@@ -37,7 +37,7 @@ cmp.setup({
   })
 })
 
--- Setup LSP for TypeScript, Rust, and HTML with mason
+-- Setup LSP for TypeScript, Rust, HTML, and Tailwind CSS with mason
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 require('lspconfig')['ts_ls'].setup {
   capabilities = capabilities,
@@ -48,6 +48,9 @@ require('lspconfig')['rust_analyzer'].setup {
 require('lspconfig')['html'].setup {
   capabilities = capabilities,
   filetypes = { "html", "htm", "tsx", "jsx" },
+}
+require('lspconfig')['tailwindcss'].setup {
+  capabilities = capabilities,
 }
 
 local null_ls = require("null-ls")

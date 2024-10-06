@@ -21,13 +21,13 @@ end
 local status_ok_mason_lspconfig, mason_lspconfig = pcall(require, "mason-lspconfig")
 if status_ok_mason_lspconfig then
     mason_lspconfig.setup({
-        ensure_installed = { 'ts_ls', 'rust_analyzer' }
+        ensure_installed = { 'ts_ls', 'rust_analyzer', 'tailwindcss' }
     })
 else
     print("Error: mason-lspconfig not installed")       
 end
 
--- Setup lspconfig for TypeScript and Rust
+-- Setup lspconfig for TypeScript, Rust, and Tailwind CSS
 local status_ok_lspconfig, lspconfig = pcall(require, "lspconfig")
 if status_ok_lspconfig then
     -- TypeScript/JavaScript
@@ -47,11 +47,19 @@ if status_ok_lspconfig then
 
     -- Rust
     require('rust-tools').setup({})
+
+    -- Tailwind CSS
+    lspconfig.tailwindcss.setup({
+        on_attach = function(client, bufnr)
+            client.resolved_capabilities.document_formatting = false
+            client.resolved_capabilities.document_range_formatting = false
+        end,
+    })
 else
     print("Error: lspconfig not installed")
 end
 
--- Null-ls setup for formatting with Prettier
+-- Null-ls setup for formatting with Prettier       
 local status_ok_null_ls, null_ls = pcall(require, "null-ls")
 if status_ok_null_ls then
     null_ls.setup({
