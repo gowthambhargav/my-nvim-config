@@ -1,6 +1,14 @@
+-- ~/.config/nvim/init.lua-1
+
 require("gb.remap")
 require("gb.packer")
 require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/lua/gb/snippets.lua" })
+require("gb.snippets")
+
+-- HTML LSP setup
+require('lspconfig').html.setup({
+    filetypes = { "html", "htm", "tsx", "jsx" },
+})
 
 -- Load Mason and setup LSPs
 local status_ok_mason, mason = pcall(require, "mason")
@@ -23,7 +31,7 @@ end
 local status_ok_lspconfig, lspconfig = pcall(require, "lspconfig")
 if status_ok_lspconfig then
     -- TypeScript/JavaScript
-    lspconfig.tsserver.setup({
+    lspconfig.ts_ls.setup({
         on_attach = function(client, bufnr)
             client.resolved_capabilities.document_formatting = false
             client.resolved_capabilities.document_range_formatting = false

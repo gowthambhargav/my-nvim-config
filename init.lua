@@ -1,5 +1,6 @@
-require("gb")
+-- ~/.config/nvim/init.lua
 
+require("gb")
 
 -- Enable line numbers
 vim.opt.number = true
@@ -30,13 +31,13 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
+    { name = 'tailwindcss-colorizer-cmp' }, -- Add Tailwind CSS colorizer source
   }, {
     { name = 'buffer' },
   })
 })
 
-
--- Setup LSP for TypeScript and Rust with mason
+-- Setup LSP for TypeScript, Rust, and HTML with mason
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 require('lspconfig')['ts_ls'].setup {
   capabilities = capabilities,
@@ -44,8 +45,10 @@ require('lspconfig')['ts_ls'].setup {
 require('lspconfig')['rust_analyzer'].setup {
   capabilities = capabilities,
 }
-
-
+require('lspconfig')['html'].setup {
+  capabilities = capabilities,
+  filetypes = { "html", "htm", "tsx", "jsx" },
+}
 
 local null_ls = require("null-ls")
 
@@ -56,5 +59,3 @@ null_ls.setup({
         }),
     },
 })
-
-

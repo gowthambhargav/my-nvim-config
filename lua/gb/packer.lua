@@ -1,7 +1,4 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
-
--- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
+-- ~/.config/nvim/lua/gb/packer.lua
 
 return require('packer').startup(function(use)
   -- Packer can manage itself
@@ -47,20 +44,38 @@ return require('packer').startup(function(use)
   -- Snippet engine
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
+
+  -- Color schemes
   use 'EdenEast/nightfox.nvim'
-use 'overcache/NeoSolarized'
-use 'sainnhe/everforest'
+  use 'overcache/NeoSolarized'
+  use 'sainnhe/everforest'
 
-use {
-  'windwp/nvim-autopairs',
-  config = function()
-    require('nvim-autopairs').setup{}
-  end
-}
-use 'L3MON4D3/LuaSnip'
-use 'saadparwaiz1/cmp_luasnip' -- For completion integration with LuaSnip
+  -- Autopairs for automatic closing of brackets and quotes
+  use {
+    'windwp/nvim-autopairs',
+    config = function()
+      require('nvim-autopairs').setup{}
+    end
+  }
 
+  -- Auto-closing tags plugin
+  use {
+    'windwp/nvim-ts-autotag',
+    config = function()
+      require('nvim-ts-autotag').setup()
+    end
+  }
 
+  -- Tailwind CSS colorizer and auto-suggestion plugin
+  use {
+    'roobert/tailwindcss-colorizer-cmp.nvim',
+    config = function()
+      require('tailwindcss-colorizer-cmp').setup({
+        color_square_width = 2,
+      })
+    end
+  }
+
+  -- ES7+ React/Redux/React-Native snippets
+  use 'dsznajder/vscode-es7-javascript-react-snippets'
 end)
-
-
